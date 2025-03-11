@@ -1,4 +1,3 @@
-// src/views/Home.js
 import React, { useEffect, useState } from 'react';
 import Song from '../components/Song';
 import Header from '../components/Header';
@@ -86,7 +85,7 @@ const Home = () => {
 
     setSongs(songList);
     console.log('La app se ha cargado correctamente');
-  }, []); // El array vacío asegura que se ejecute solo una vez, como componentDidMount
+  }, []);
 
   return (
     <div className="home">

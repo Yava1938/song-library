@@ -1,18 +1,16 @@
-import React, { Component } from "react";
+import React, { useEffect } from "react";
 import Home from "./views/Home";
 import './css/app.css'
 
-class App extends Component {
-  componentDidMount(){
+const App = ()=> {
+  useEffect(() =>{
     console.log('Se ha montado el componente');
-  }
-  render(){
-    return (
+  }, [])
+  return (
       <div className="App">
       <Home />
     </div>
   );
-}
 }
 
 export default App;
