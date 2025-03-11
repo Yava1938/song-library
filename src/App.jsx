@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
-import Home from "./views/Home";
+import {Home} from "./views/Home";
 import './css/app.css'
 
-const App = ()=> {
+export const App = ()=> {
   useEffect(() =>{
     console.log('Se ha montado el componente');
   }, [])
@@ -13,4 +13,4 @@ const App = ()=> {
   );
 }
 
-export default App;
+

@@ -1,7 +1,6 @@
-// src/components/Song.js
 import React from 'react';
 
-const Song = ({ title, artist, duration, album }) => {
+export const Song = ({ title, artist, duration, album }) => {
     return (
         <div className="song">
           <h2>{title}</h2>
@@ -11,5 +10,3 @@ const Song = ({ title, artist, duration, album }) => {
         </div>
     );
 }
-
-export default Song;

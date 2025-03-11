@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import Song from '../components/Song';
-import Header from '../components/Header';
-import SearchBar from '../components/SearchBar';
+import {Song} from '../components/Song';
+import {Header} from '../components/Header';
+import {SearchBar} from '../components/SearchBar';
+import { useSearch } from '../hooks/useSearch';
+import { motion, AnimatePresence } from 'framer-motion';
 
-const Home = () => {
+export const Home = () => {
   const [songs, setSongs] = useState([]);
 
   useEffect(() => {
-   
     const songList = [
       { title: 'Mi version de ti', artist: 'DAAZ', duration: "3:59" },
       { title: 'Orion', artist: 'Boza, Elena Rose', duration: "4:02" },
@@ -87,22 +88,64 @@ const Home = () => {
     console.log('La app se ha cargado correctamente');
   }, []);
 
+  const { query, filteredData, handleChange } = useSearch(songs);
+  
   return (
     <div className="home">
       <Header />
-      <SearchBar />
-      <div className="songs-container">
-      {songs.map((song, index) => (
-        <Song
-        key={index}
-        title={song.title}
-        artist={song.artist}
-        duration={song.duration}
-        />
-      ))}
+      <SearchBar query={query} handleChange={handleChange} />
+      
+      <div className='main-container'>
+        <div className='container-all'>
+          <h2 className='songs-container-title'>Todas las canciones: {songs.length}</h2>
+          <div className="songs-container">
+          {songs.map((song, index) => (
+            <Song
+            key={index}
+            title={song.title}
+            artist={song.artist}
+            duration={song.duration}
+            />
+          ))}
+          </div>
+        </div>
+
+        <div className='container-selectas'>
+        <h2 className='songs-container-title'>Consultadas: {filteredData.length}</h2>
+        <div className="songs-container">
+          <AnimatePresence>
+          {filteredData.length === 0 && query !== '' && (
+            <motion.p 
+            key="no-results"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="no-results"
+            >
+              ❌ No se encontraron resultados para: <strong>{query}</strong>
+            </motion.p>
+          )}
+
+          {filteredData.map((song, index) =>(
+            <motion.div
+            key={index}
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+          >
+            <Song
+              key={index}
+              title={song.title}
+              artist={song.artist}
+              duration={song.duration}
+            />
+            </motion.div>
+          ))}
+          </AnimatePresence>
+          </div>
+        </div>
       </div>
     </div>
   );
 };
-
-export default Home;
