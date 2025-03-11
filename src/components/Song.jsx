@@ -1,10 +1,6 @@
-// src/components/Song.js
-import React, { Component } from 'react';
+import React from 'react';
 
-class Song extends Component {
-  render() {
-    const { title, artist, duration, album } = this.props;
-
+export const Song = ({ title, artist, duration, album }) => {
     return (
         <div className="song">
           <h2>{title}</h2>
@@ -13,7 +9,4 @@ class Song extends Component {
           <p>Duración: {duration}</p>
         </div>
     );
-  }
 }
-
-export default Song;
