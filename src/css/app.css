@@ -57,6 +57,9 @@
     display: flex;
     justify-content: space-evenly;
     gap: 5px;
+    max-height: 350px;
+    overflow-y: auto;
+    box-sizing: border-box;
   }
   
   .songs-container-title{
@@ -68,6 +71,11 @@
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap:20px
   }
+
+  .favoritas-container{
+    width: 60%;
+    margin: 30px auto;
+  }
   
   .song {
     background-color: #f4f4f4;
@@ -76,6 +84,22 @@
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     transition: transform 0.3s ease;
+  }
+
+  .song-favorite{
+    display: flex;
+    justify-content: space-between;
+
+    margin: 10px 0;
+    background-color: #f4f4f4;
+    padding: 22px;
+    border-radius: 5px;
+  }
+
+  .favorite-title{
+    display: flex;
+    justify-content: space-between;
+    gap: 10px
   }
   
   h2 {
@@ -86,4 +110,24 @@
   p {
     margin: 5px 0;
   }
+
+  .heart-icon {
+    cursor: pointer;
+    color: gray;
+    font-size: 20px;
+  }
   
+  .heart-icon.favorite {
+    color: red;
+  }
+  
+  .delete-icon {
+    cursor: pointer;
+    color: red;
+  }
+  
+  .library{
+    max-height: 350px;
+    overflow-y: auto;
+    box-sizing: border-box;
+  }
