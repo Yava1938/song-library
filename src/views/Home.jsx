@@ -7,11 +7,13 @@ import { useSongs } from '../hooks/useSongs';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../hooks/useAuth';
 import { useAuthUser } from '../hooks/useAuthUser';
+import { useNavigate } from "react-router-dom";
 
 export const Home = () => {
   const [loading, setLoading] = useState(true);
   const {fetchToken} = useAuth(); 
   const {fetchTokenUser} = useAuthUser(); 
+  const navigate = useNavigate();
 
   useEffect(() => {
     const authenticate = async () => {
@@ -45,14 +47,17 @@ export const Home = () => {
             <h2 className='songs-container-title'>Todas las canciones: {songs.length}</h2>
           <div className="songs-container">
           {songs.map((song, index) => (
+            <div key={index} onClick={() => navigate(`/song/${song.track.id}`)} style={{ cursor: "pointer" }}>
             <Song
             key={index}
             title={song.track.name}
             artist={song.track.artists[0].name}
+            album={song.track.album.name}
             duration={convertMilliseconds( song.track.duration_ms)}
             isFavorite={favorites.some((fav) => fav.track.name === song.track.name)}
             onToggleFavorite={() => toggleFavorite(song)}
             />
+            </div>
           ))}
           </div>
         </div>
@@ -80,6 +85,8 @@ export const Home = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.3 }}
+                onClick={() => navigate(`/song/${song.track.id}`)}
+                style={{ cursor: "pointer" }}
               >
                 <Song
                   key={index}

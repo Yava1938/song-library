@@ -19,7 +19,10 @@ export const Library = ({ favorites, setFavorites }) => {
       {favorites.map((song, index) => (
         <div key={index} className="song-favorite">
           <div className='favorite-title'>
-            <h2>{song.track.name} </h2>
+            <div className='favorite-title-info'>
+              <h2 className='nameSong'>{song.track.name} </h2>
+              <h2 className='album'>{song.track.album.name} </h2>
+            </div>
             <p> - </p>
             <p>{song.track.artists[0].name}</p>
           </div>

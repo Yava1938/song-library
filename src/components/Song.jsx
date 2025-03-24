@@ -11,7 +11,10 @@ export const Song = ({ title, artist, duration, album, isFavorite, onToggleFavor
           <p>Duración: {duration}</p>
           <FaHeart 
         className={`heart-icon ${isFavorite ? 'favorite' : ''}`} 
-        onClick={onToggleFavorite} 
+        onClick={(event) => {
+          event.stopPropagation(); 
+          onToggleFavorite();
+        }} 
       />
         </div>
     );
