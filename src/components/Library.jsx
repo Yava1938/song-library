@@ -3,8 +3,14 @@ import { FaTrash } from 'react-icons/fa';
 
 export const Library = ({ favorites, setFavorites }) => {
   const removeFavorite = (title) => {
-    setFavorites(favorites.filter(song => song.title !== title));
+    setFavorites(favorites.filter(song => song.track.name !== title));
   };
+  function convertMilliseconds(ms) {
+    const minutes = Math.floor(ms / 60000); 
+    const seconds = Math.floor((ms % 60000) / 1000); 
+    const formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
+    return `${minutes}:${formattedSeconds}`;
+  }
 
   return (
     <div className="library">
@@ -13,13 +19,13 @@ export const Library = ({ favorites, setFavorites }) => {
       {favorites.map((song, index) => (
         <div key={index} className="song-favorite">
           <div className='favorite-title'>
-            <h2>{song.title} </h2>
+            <h2>{song.track.name} </h2>
             <p> - </p>
-            <p>{song.artist}</p>
+            <p>{song.track.artists[0].name}</p>
           </div>
           <div className='favorite-time'>
-          <FaTrash className="delete-icon" onClick={() => removeFavorite(song.title)} />
-            <p>Duración: {song.duration}</p>
+          <FaTrash className="delete-icon" onClick={() => removeFavorite(song.track.name)} />
+            <p>Duración: {convertMilliseconds(song.track.duration_ms)}</p>
           </div>
         </div>
       ))}

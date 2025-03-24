@@ -1,15 +1,40 @@
-import React from 'react';
+import React, { useEffect, useState }from 'react';
 import {Song} from '../components/Song';
 import {Header} from '../components/Header';
 import {SearchBar} from '../components/SearchBar';
 import { Library } from '../components/Library'
 import { useSongs } from '../hooks/useSongs';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useAuth } from '../hooks/useAuth';
+import { useAuthUser } from '../hooks/useAuthUser';
 
 export const Home = () => {
+  const [loading, setLoading] = useState(true);
+  const {fetchToken} = useAuth(); 
+  const {fetchTokenUser} = useAuthUser(); 
+
+  useEffect(() => {
+    const authenticate = async () => {
+      await fetchToken(); 
+      await fetchTokenUser(); 
+      setLoading(false); 
+    };
+
+    authenticate();
+  }, [fetchToken, fetchTokenUser]); 
 
   const { songs, favorites, toggleFavorite, setFavorites, query, filteredData, handleChange } = useSongs();
   
+  if (loading) {
+    return <p>Cargando autenticación...</p>;
+  }
+
+  function convertMilliseconds(ms) {
+    const minutes = Math.floor(ms / 60000); 
+    const seconds = Math.floor((ms % 60000) / 1000); 
+    const formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
+    return `${minutes}:${formattedSeconds}`;
+  }
   return (
     <div className="home">
       <Header />
@@ -22,10 +47,10 @@ export const Home = () => {
           {songs.map((song, index) => (
             <Song
             key={index}
-            title={song.title}
-            artist={song.artist}
-            duration={song.duration}
-            isFavorite={favorites.some((fav) => fav.title === song.title)}
+            title={song.track.name}
+            artist={song.track.artists[0].name}
+            duration={convertMilliseconds( song.track.duration_ms)}
+            isFavorite={favorites.some((fav) => fav.track.name === song.track.name)}
             onToggleFavorite={() => toggleFavorite(song)}
             />
           ))}
@@ -58,10 +83,10 @@ export const Home = () => {
               >
                 <Song
                   key={index}
-                  title={song.title}
-                  artist={song.artist}
-                  duration={song.duration}
-                  isFavorite={favorites.some((fav) => fav.title === song.title)}
+                  title={song.track.name}
+                  artist={song.track.artists[0].name}
+                  duration={convertMilliseconds(song.track.duration_ms)}
+                  isFavorite={favorites.some((fav) => fav.track.name === song.track.name)}      
                   onToggleFavorite={() => toggleFavorite(song)}
                 />
                 </motion.div>
