@@ -10,7 +10,7 @@ import { useAuthUser } from '../hooks/useAuthUser';
 import { useNavigate } from "react-router-dom";
 
 export const Home = () => {
-  const [loading, setLoading] = useState(true);
+  const [authLoading, setAuthLoading] = useState(true);
   const {fetchToken} = useAuth(); 
   const {fetchTokenUser} = useAuthUser(); 
   const navigate = useNavigate();
@@ -19,16 +19,34 @@ export const Home = () => {
     const authenticate = async () => {
       await fetchToken(); 
       await fetchTokenUser(); 
-      setLoading(false); 
+      setAuthLoading(false); 
     };
 
     authenticate();
   }, [fetchToken, fetchTokenUser]); 
 
-  const { songs, favorites, toggleFavorite, setFavorites, query, filteredData, handleChange } = useSongs();
+  const { songs, favorites, toggleFavorite, setFavorites, query, filteredData, handleChange, loading, error, fetchSongs } = useSongs();
   
-  if (loading) {
+  if (authLoading) {
     return <p>Cargando autenticación...</p>;
+  }
+
+  if (loading) {
+    return ( 
+    <div className="home">
+      <Header />
+    <p>Cargando canciones...</p>
+    </div>
+  );}
+
+  if (error) {
+    return (
+      <div className="home">
+      <Header />
+        <p>{error}</p>
+        <button onClick={fetchSongs}>Reintentar</button>
+      </div>
+    );
   }
 
   function convertMilliseconds(ms) {

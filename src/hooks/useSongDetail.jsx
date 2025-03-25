@@ -5,30 +5,33 @@ export const useSongDetail = (songId) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchSongDetail = async () => {
-      try {
-        const response = await fetch(`https://api.spotify.com/v1/tracks/${songId}`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("spotify_token")}`,
-          },
-        });
+  const fetchSongDetail = async () => {
+    setLoading(true);
+    setError(null);
+    try {
 
-        if (!response.ok) {
-          throw new Error("Error al obtener los datos de la canción");
-        }
-
-        const data = await response.json();
-        setSong(data);
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
+      const response = await fetch(`${process.env.REACT_APP_SPOTIFY_API_URL_TRACKS.replace('/me', '')}/${songId}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("spotify_token")}`,
+        },
+      });
+      
+      if (!response.ok) {
+        throw new Error("Error al obtener los datos de la canción");
       }
-    };
-
+      
+      const data = await response.json();
+      setSong(data);
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+  useEffect(() => {
     fetchSongDetail();
   }, [songId]);
 
-  return { song, loading, error };
+  return { song, loading, error, fetchSongDetail };
 };
