@@ -11,8 +11,8 @@ export const useSearch = (data) => {
     }
 
     const filtered = data.filter(song =>
-      song.title.toLowerCase().includes(query.toLowerCase()) ||
-      song.artist.toLowerCase().includes(query.toLowerCase())
+      song.track.name.toLowerCase().includes(query.toLowerCase()) ||
+      song.track.artists[0].name.toLowerCase().includes(query.toLowerCase())
     );
 
     setFilteredData(filtered);
