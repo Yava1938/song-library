@@ -32,6 +32,7 @@ Por lo cual se deben generar 2 Tokens diferentes
     En el postman hay un metodo llamado obtener code token, si ya reemplazamos todas las variables del postman, lo vamos a ejecutar, y en la consola de logs del postman veremos una url que imprimimos, esa la ejecutaremos en un navegador y nos devolvera un code en la url una vez que el navegador se recargue, ese code se rescata y se anexa en el metodo de Login Code, en el unico parametro que haria falta que es el code y si todo es correcto, al ejecutar el servicio, nos devolvera un token diferente; o bien, ese code se debe ingresar de forma manual en el codigo de la aplicacion web en el hook useAuthUser en la linea 21 en el valor hardcore que tiene por defecto, habiendo hecho todo esto de forma correcta, una vez levantemos el servicio deberia visualizarse la informacion que el API de Spotify nos devuelva.
 
 # NOTA: No se puede ocupar el mismo code 2 veces para generar un token, asi que se usa en el postman o en el aplicativo web.
+# NOTA: en algunos casos, se debe vaciar el LocalStorage y recargar 2 o 3 veces la pagina principal
 # El postman se encuentra aqui en el proyecto.
 
 ### `npm start`
