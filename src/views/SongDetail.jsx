@@ -7,11 +7,25 @@ import {Header} from '../components/Header';
 export const SongDetail = () => {
   const { id } = useParams(); 
   const navigate = useNavigate();
-  const { song, loading, error } = useSongDetail(id); 
+  const { song, loading, error, fetchSongDetail } = useSongDetail(id); 
 
-  if (loading) return <p>Cargando canción...</p>;
-  if (error) return <p>Error: {error}</p>;
-  if (!song) return <p>No se encontró la canción</p>;
+  if (loading) return(
+      <div>
+        <Header /> 
+        <p>Cargando canción...</p>
+      </div>
+      );
+  if (error) return(
+      <div>
+        <Header /> 
+        <p>Error: {error}</p>
+      </div>);
+  if (!song) return(
+      <div>
+        <Header /> 
+        <p>No se encontró la canción</p>
+    </div>
+    );
 
   const { name, duration_ms, popularity, external_urls, album, artists, explicit } = song;
   console.log("song: ", song);
