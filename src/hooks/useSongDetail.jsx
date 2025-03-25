@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
-export const useSongDetail = (songId) => {
+export const useSongDetail =  (songId) => {
   const [song, setSong] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const fetchSongDetail = async () => {
+  const fetchSongDetail = useCallback( async () => {
     setLoading(true);
     setError(null);
     try {
@@ -27,11 +27,11 @@ export const useSongDetail = (songId) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [songId]);
   
   useEffect(() => {
     fetchSongDetail();
-  }, [songId]);
+  }, [fetchSongDetail]);
 
   return { song, loading, error, fetchSongDetail };
 };

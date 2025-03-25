@@ -7,7 +7,7 @@ import {Header} from '../components/Header';
 export const SongDetail = () => {
   const { id } = useParams(); 
   const navigate = useNavigate();
-  const { song, loading, error, fetchSongDetail } = useSongDetail(id); 
+  const { song, loading, error } = useSongDetail(id); 
 
   if (loading) return(
       <div>
@@ -28,7 +28,6 @@ export const SongDetail = () => {
     );
 
   const { name, duration_ms, popularity, external_urls, album, artists, explicit } = song;
-  console.log("song: ", song);
 
   const convertDuration = (ms) => {
     const minutes = Math.floor(ms / 60000);
