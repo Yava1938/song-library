@@ -8,6 +8,16 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../hooks/useAuth';
 import { useAuthUser } from '../hooks/useAuthUser';
 import { useNavigate } from "react-router-dom";
+import {
+  HomeContainer,
+  MainContainer,
+  SongsContainerTitle,
+  SongsContainer,
+  FavoritasContainer,
+  NoResults,
+  SongContainer,
+  RetryButton,
+} from '../css/Home-styles';
 
 export const Home = () => {
   const [authLoading, setAuthLoading] = useState(true);
@@ -33,19 +43,19 @@ export const Home = () => {
 
   if (loading) {
     return ( 
-    <div className="home">
+    <HomeContainer>
       <Header />
     <p>Cargando canciones...</p>
-    </div>
+    </HomeContainer>
   );}
 
   if (error) {
     return (
-      <div className="home">
+      <HomeContainer>
       <Header />
         <p>{error}</p>
-        <button onClick={fetchSongs}>Reintentar</button>
-      </div>
+        <RetryButton onClick={fetchSongs}>Reintentar</RetryButton>
+      </HomeContainer>
     );
   }
 
@@ -56,18 +66,17 @@ export const Home = () => {
     return `${minutes}:${formattedSeconds}`;
   }
   return (
-    <div className="home">
+    <HomeContainer>
       <Header />
       <SearchBar query={query} handleChange={handleChange} />
       
-      <div className='main-container'>
+      <MainContainer>
         <div className='container-all'>
-            <h2 className='songs-container-title'>Todas las canciones: {songs.length}</h2>
-          <div className="songs-container">
-          {songs.map((song, index) => (
-            <div key={index} onClick={() => navigate(`/song/${song.track.id}`)} style={{ cursor: "pointer" }}>
+            <SongsContainerTitle>Todas las canciones: {songs.length}</SongsContainerTitle>
+          <SongsContainer>
+          {songs.map((song) => (
+            <SongContainer key={song.track.id} onClick={() => navigate(`/song/${song.track.id}`)} style={{ cursor: "pointer" }}>
             <Song
-            key={index}
             title={song.track.name}
             artist={song.track.artists[0].name}
             album={song.track.album.name}
@@ -75,17 +84,17 @@ export const Home = () => {
             isFavorite={favorites.some((fav) => fav.track.name === song.track.name)}
             onToggleFavorite={() => toggleFavorite(song)}
             />
-            </div>
+            </SongContainer>
           ))}
-          </div>
+          </SongsContainer>
         </div>
 
         <div className='container-selectas'>
-          <h2 className='songs-container-title'>Consultadas: {filteredData.length}</h2>
-            <div className="songs-container">
+          <SongsContainerTitle>Consultadas: {filteredData.length}</SongsContainerTitle>
+            <SongsContainer>
               <AnimatePresence>
               {filteredData.length === 0 && query !== '' && (
-                <motion.p 
+                <NoResults 
                 key="no-results"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -93,7 +102,7 @@ export const Home = () => {
                 className="no-results"
                 >
                   ❌ No se encontraron resultados para: <strong>{query}</strong>
-                </motion.p>
+                </NoResults>
               )}
 
               {filteredData.map((song, index) =>(
@@ -117,12 +126,12 @@ export const Home = () => {
                 </motion.div>
               ))}
               </AnimatePresence>
-              </div>
+              </SongsContainer>
         </div>
-      </div>
-      <div className='favoritas-container'>
+      </MainContainer>
+      <FavoritasContainer>
         <Library favorites={favorites} setFavorites={setFavorites} />
-      </div>
-    </div>
+      </FavoritasContainer>
+    </HomeContainer>
   );
 };

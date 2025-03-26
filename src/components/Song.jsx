@@ -1,21 +1,20 @@
 import React from 'react';
-import { FaHeart } from 'react-icons/fa';
+import { SongContainer, HeartIcon } from '../css/Song-styles.js';
 
 export const Song = ({ title, artist, duration, album, isFavorite, onToggleFavorite }) => {
-  
     return (
-        <div className="song">
+        <SongContainer>
           <h2>{title}</h2>
           <p>Artista: {artist}</p>
           <p>Álbum: {album}</p>
           <p>Duración: {duration}</p>
-          <FaHeart 
-        className={`heart-icon ${isFavorite ? 'favorite' : ''}`} 
+          <HeartIcon 
+          isFavorite={isFavorite}
         onClick={(event) => {
           event.stopPropagation(); 
           onToggleFavorite();
         }} 
       />
-        </div>
+        </SongContainer>
     );
 }

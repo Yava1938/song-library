@@ -3,6 +3,20 @@ import { useParams, useNavigate } from "react-router-dom";
 import { FaSpotify, FaClock, FaFire, FaArrowLeft } from "react-icons/fa";
 import { useSongDetail } from "../hooks/useSongDetail";
 import {Header} from '../components/Header';
+import {
+  SongDetailContainer,
+  BackButton,
+  BackIcon,
+  AlbumContainer,
+  InfoContainer,
+  SongTitle,
+  ArtistName,
+  AlbumInfo,
+  Details,
+  ExplicitTag,
+  SpotifyButton,
+  SpotifyIcon,
+} from "../css/SongDetail-styles";
 
 export const SongDetail = () => {
   const { id } = useParams(); 
@@ -10,21 +24,21 @@ export const SongDetail = () => {
   const { song, loading, error } = useSongDetail(id); 
 
   if (loading) return(
-      <div>
+      <SongDetailContainer>
         <Header /> 
         <p>Cargando canción...</p>
-      </div>
+      </SongDetailContainer>
       );
   if (error) return(
-      <div>
+      <SongDetailContainer>
         <Header /> 
         <p>Error: {error}</p>
-      </div>);
+      </SongDetailContainer>);
   if (!song) return(
-      <div>
+      <SongDetailContainer>
         <Header /> 
         <p>No se encontró la canción</p>
-    </div>
+    </SongDetailContainer>
     );
 
   const { name, duration_ms, popularity, external_urls, album, artists, explicit } = song;
@@ -36,36 +50,35 @@ export const SongDetail = () => {
   };
 
   return (
-    <div>
+    <SongDetailContainer>
       <Header />
-    <div className="song-detail">
-      <button onClick={() => navigate(-1)} className="back-button">
-        <FaArrowLeft className="back-icon" /> Volver
-      </button>
+      <BackButton onClick={() => navigate(-1)} className="back-button">
+      <BackIcon><FaArrowLeft /></BackIcon> Volver
+      </BackButton>
 
-      <div className="album-container">
-        <img src={album.images[0].url} alt={album.name} className="album-cover" />
-      </div>
+      <AlbumContainer>
+        <img src={album.images[0].url} alt={album.name} />
+      </AlbumContainer>
 
-      <div className="info">
-        <h1 className="song-title">{name}</h1>
-        <h2 className="artist-name">{artists.map(artist => artist.name).join(", ")}</h2>
+      <InfoContainer>
+        <SongTitle>{name}</SongTitle>
+        <ArtistName>{artists.map(artist => artist.name).join(", ")}</ArtistName>
 
-        <p className="album-info">
+        <AlbumInfo>
           Álbum: <span>{album.name}</span> ({album.release_date.split("-")[0]})
-        </p>
+        </AlbumInfo>
 
-        <div className="details">
+        <Details>
           <p><FaClock className="icon" /> Duración: {convertDuration(duration_ms)}</p>
           <p><FaFire className="icon" /> Popularidad: {popularity}</p>
-          {explicit && <p className="explicit-tag">🔞 Explícito</p>}
-        </div>
+        </Details>
+          
+          {explicit && <ExplicitTag>🔞 Explícito</ExplicitTag>}
 
-        <a href={external_urls.spotify} target="_blank" rel="noopener noreferrer" className="spotify-button">
-          <FaSpotify className="spotify-icon" /> Escuchar en Spotify
-        </a>
-      </div>
-    </div>
-    </div>
+        <SpotifyButton href={external_urls.spotify} target="_blank" rel="noopener noreferrer">
+          <SpotifyIcon><FaSpotify /></SpotifyIcon> Escuchar en Spotify
+        </SpotifyButton>
+      </InfoContainer>
+    </SongDetailContainer>
   );
 };

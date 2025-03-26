@@ -1,19 +1,23 @@
 import React from 'react';
 import Song from './Song';
+import {ResultsContainer, Title, SongResult} from '../css/SearchResults-styles.js';
 
 export const SearchResults = ({songs}) =>{
     return (
-        <div className="songs-results">
-            <h2>Resultado de busqueda...</h2>
-            {songs.map((song, index) => {
-                <div className='song-result'>
+        <ResultsContainer>
+            <Title>Resultado de busqueda...</Title>
+            {songs.length === 0 ? (
+                <p>No se encontraron canciones</p>
+            ): (
+            songs.map((song, index) => (
+                <SongResult> key={index}
                     <Song 
-                    key={index}
                     title={song.title}
                     artist={song.artist}
                     duration={song.duration} />
-                </div>
-            })}
-        </div>
+                </SongResult>
+            ))
+            )}
+        </ResultsContainer>
     );
 }

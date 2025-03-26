@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaTrash } from 'react-icons/fa';
+import { LibraryContainer, DeleteIcon, FavoriteSong, FavoriteTitle, TitleInfo, SongName, AlbumName, FavoriteTime } from '../css/Library-styles';
 
 export const Library = ({ favorites, setFavorites }) => {
   const removeFavorite = (title) => {
@@ -13,25 +13,25 @@ export const Library = ({ favorites, setFavorites }) => {
   }
 
   return (
-    <div className="library">
+    <LibraryContainer>
       <h2>Biblioteca de Favoritos</h2>
       {favorites.length === 0 ? <p>No hay canciones favoritas aún.</p> : null}
-      {favorites.map((song, index) => (
-        <div key={index} className="song-favorite">
-          <div className='favorite-title'>
-            <div className='favorite-title-info'>
-              <h2 className='nameSong'>{song.track.name} </h2>
-              <h2 className='album'>{song.track.album.name} </h2>
-            </div>
+      {favorites.map((song) => (
+        <FavoriteSong key={song.track.id}>
+          <FavoriteTitle>
+            <TitleInfo>
+              <SongName>{song.track.name} </SongName>
+              <AlbumName>{song.track.album.name} </AlbumName>
+            </TitleInfo>
             <p> - </p>
             <p>{song.track.artists[0].name}</p>
-          </div>
-          <div className='favorite-time'>
-          <FaTrash className="delete-icon" onClick={() => removeFavorite(song.track.name)} />
+          </FavoriteTitle>
+          <FavoriteTime>
+          <DeleteIcon  onClick={() => removeFavorite(song.track.name)} />
             <p>Duración: {convertMilliseconds(song.track.duration_ms)}</p>
-          </div>
-        </div>
+          </FavoriteTime>
+        </FavoriteSong>
       ))}
-    </div>
+    </LibraryContainer>
   );
 };

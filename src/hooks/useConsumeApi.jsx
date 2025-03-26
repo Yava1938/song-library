@@ -7,7 +7,7 @@ export const useConsumeApi = (options = {}) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    let isMounted = true; // Para evitar actualizaciones después de desmontar el componente
+    let isMounted = true; 
 
     const fetchData = async () => {
       setLoading(true);
@@ -28,7 +28,7 @@ export const useConsumeApi = (options = {}) => {
     return () => {
       isMounted = false;
     };
-  }, [options]); // Dependemos de "options" para que se vuelva a ejecutar cuando cambie
+  }, [options]); 
 
   return { data, loading, error };
 };
