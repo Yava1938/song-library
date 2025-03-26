@@ -18,7 +18,7 @@ export const useAuthUser = () => {
           client_secret: process.env.REACT_APP_CLIENT_SECRET,
           scope: "user-library-read",
           redirect_uri: 'https://example.com/callback',
-          code: 'AQC2hufJTmFDYbMUgTY-VdUNZm8Wwz222j53_QzCH6Bp-niQId7iK4RkrA8m5HGCRRBRhomIkhC8GsVGpzR8h1TCPHrTXatHcTgLSbQ_UPti9gsZ_5vw8VpnOaR6fGrllZY0pZ9cNNvoTRuywf96G703ebQvYIxf2ogzqJPJ2TKqPD4uHoS5K4WxJx37Ux9BKNAj'
+          code: 'AQAp1UuVKIvUP-JSN5ttZD2CYpmPueMA2666nPRqNq29alJYx77lgv2h-gL6du9B5J0xGEK6j1wepa6kTyR7KdTa4CwyZQolSyklwVKKTq92uA-aoErrE2tgSQv94NG5O8DjRRR2aJn7wGzjMTVhc79UGaiD4uLYoBZ0fwDRWc_GZ4uTuVGAs8Xtb4zqcrIud3jZ'
         });
   
         const response = await axios.post(
